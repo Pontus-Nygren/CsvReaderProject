@@ -1,0 +1,13 @@
+2015-04-28, 008221, Kalle, Anka, Ankeborgvägen 27
+2015-05-28, 0608221, Kale, Anka, Ankeborgvägen 273
+2015-07-28, 0508221, alle, Anka, Ankeborgvägen 274
+2015-06-28, 0308221, Klle, Anka, Ankeborgvägen 275
+2015-02-28, 0208221, Kall, Anka, Ankeborgvägen 276
+2015-01-28, 7008221, Kae, Anka, Ankeborgvägen 276
+2015-12-28, 6008221, Kal, Anka, Ankeborgvägen 278
+2015-11-28, 5008221, ale, Anka, Ankeborgvägen 279
+2015-10-28, 4008221, Kalle, Anka, Ankeborgvägen 270
+2015-04-28, 3008221, Kalle, Anka, Ankeborgvägen 207
+2015-04-28, 2008221, Kalle, Anka, Ankeborgvägen 7
+2015-04-28, 1008221, Kalle, Anka, Ankeborgvägen 2
+

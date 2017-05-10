@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="anchorpane" fx:id="anchorpane" prefHeight="720.0" prefWidth="1024.0" stylesheets="@Css.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="csvreader.UserPageController">
+   <children>
+      <SplitPane fx:id="splitPane" dividerPositions="0.24755381604696672" layoutX="16.0" layoutY="12.0" prefHeight="720.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane fx:id="leftSplit" maxWidth="250.0" minHeight="0.0" minWidth="25.0" prefHeight="160.0" prefWidth="246.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <VBox prefHeight="718.0" prefWidth="250.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Text fill="#d7d7d7" layoutX="35.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CSV">
+                                 <font>
+                                    <Font name="System Bold Italic" size="78.0" />
+                                 </font>
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Text>
+                              <Text fill="#d7d7d7" layoutX="107.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reader">
+                                 <font>
+                                    <Font name="System Bold Italic" size="34.0" />
+                                 </font>
+                                 <effect>
+                                    <InnerShadow height="15.0" radius="7.0" width="15.0" />
+                                 </effect>
+                              </Text>
+                              <Line endX="100.0" layoutX="125.0" layoutY="147.0" startX="-100.0" stroke="#bcb9b9">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Line>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                        <AnchorPane id="exitImg" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Text fill="#d7d7d7" layoutX="17.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Password">
+                                 <font>
+                                    <Font name="System Bold Italic" size="26.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Text>
+                              <Line endX="100.0" layoutX="125.0" layoutY="30.0" startX="-100.0" stroke="#bcb9b9">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Line>
+                              <ImageView fx:id="settingsView" fitHeight="62.0" fitWidth="70.0" layoutX="90.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane id="exitImg" onMouseClicked="#logoutButton" prefHeight="171.0" prefWidth="250.0" stylesheets="@Css.css">
+                           <children>
+                              <Line endX="100.0" layoutX="125.0" layoutY="14.0" startX="-100.0" stroke="#bcb9b9">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Line>
+                              <Line endX="100.0" layoutX="125.0" layoutY="147.0" startX="-100.0" stroke="#bcb9b9">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Line>
+                              <Text fill="#d7d7d7" layoutX="72.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Out">
+                                 <font>
+                                    <Font name="System Bold Italic" size="26.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Text>
+                              <ImageView fx:id="signOutView" fitHeight="62.0" fitWidth="70.0" layoutX="90.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="rightSplit" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <AnchorPane id="anchorpane" fx:id="rightSplit" prefHeight="720.0" prefWidth="1024.0" stylesheets="@Css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="imageview" fitHeight="16.0" fitWidth="16.0" layoutX="564.0" layoutY="14.0" onMouseClicked="#exitFunc" opacity="0.7" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <AnchorPane fx:id="tablePane" layoutX="21.0" layoutY="45.0" prefHeight="641.0" prefWidth="709.0" AnchorPane.rightAnchor="36.0">
+                           <children>
+                              <TableView fx:id="csvTable" editable="true" layoutX="364.0" layoutY="97.0" prefHeight="451.0" prefWidth="668.0" style="-fx-background-radius: 0 0 10 10;" AnchorPane.rightAnchor="20.0">
+                                 <columns>
+                                    <TableColumn fx:id="order" prefWidth="144.0" text="Package Number" />
+                                    <TableColumn fx:id="date" prefWidth="193.0" text="Date" />
+                                    <TableColumn fx:id="comment" onEditCommit="#handleEditAction" prefWidth="330.0" text="Comment" />
+                                 </columns>
+                              </TableView>
+                              <AnchorPane id="anchorpane" fx:id="notify" layoutX="255.0" layoutY="569.0" opacity="0.0" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: Green;" stylesheets="@Css.css">
+                                 <children>
+                                    <Label fx:id="msgLabel" alignment="CENTER" layoutY="10.0" prefHeight="25.0" prefWidth="206.0" text="File successfully added" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold Italic" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane id="rotImg" layoutX="648.0" layoutY="552.0" onMouseClicked="#addFileBtn" prefHeight="41.0" prefWidth="41.0" style="-fx-background-size: contain; -fx-background-image: url(File:src/img/add1.png); -fx-background-repeat: no-repeat; -fx-background-position: center;" />
+                              <AnchorPane id="rotImg" layoutX="597.0" layoutY="552.0" onMouseClicked="#deleteFunction" prefHeight="41.0" prefWidth="41.0" style="-fx-background-image: url(File:src/img/trash.png); -fx-background-size: contain; -fx-background-repeat: no-repeat; -fx-background-position: center;" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

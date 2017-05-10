@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane fx:id="splitPane" dividerPositions="0.24755381604696672" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="csvreader.AdminPageController">
+   <items>
+      <AnchorPane fx:id="leftSplit" maxWidth="250.0" minHeight="0.0" minWidth="25.0" prefHeight="160.0" prefWidth="219.0" SplitPane.resizableWithParent="false">
+         <children>
+            <VBox layoutX="61.0" layoutY="187.0" prefHeight="718.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#d7d7d7" layoutX="35.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CSV">
+                           <font>
+                              <Font name="System Bold Italic" size="78.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Text>
+                        <Text fill="#d7d7d7" layoutX="107.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reader">
+                           <font>
+                              <Font name="System Bold Italic" size="34.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow height="15.0" radius="7.0" width="15.0" />
+                           </effect>
+                        </Text>
+                        <Line endX="100.0" layoutX="125.0" layoutY="147.0" startX="-100.0" stroke="#bcb9b9">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Line>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Line endX="100.0" layoutX="125.0" layoutY="148.0" startX="-100.0" stroke="#bcb9b9">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Line>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane id="exitImg" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Line endX="100.0" layoutX="125.0" layoutY="147.0" startX="-100.0" stroke="#bcb9b9">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Line>
+                        <Text fill="#d7d7d7" layoutX="17.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Password">
+                           <font>
+                              <Font name="System Bold Italic" size="26.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Text>
+                        <ImageView fx:id="settingsView" fitHeight="62.0" fitWidth="70.0" layoutX="90.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane id="exitImg" onMouseClicked="#logoutButton" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Line endX="100.0" layoutX="125.0" layoutY="147.0" startX="-100.0" stroke="#bcb9b9">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Line>
+                        <Text fill="#d7d7d7" layoutX="52.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Out" wrappingWidth="145.880859375">
+                           <font>
+                              <Font name="System Bold Italic" size="36.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Text>
+                        <ImageView fx:id="signOutView" fitHeight="62.0" fitWidth="70.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+      <AnchorPane fx:id="rightSplit" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <AnchorPane fx:id="rightSplit" prefHeight="720.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fx:id="imageview" fitHeight="16.0" fitWidth="16.0" layoutX="564.0" layoutY="14.0" onMouseClicked="#exitFunc" opacity="0.7" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+                  <AnchorPane fx:id="tablePane" layoutX="20.0" layoutY="110.0" prefHeight="564.0" prefWidth="709.0" AnchorPane.rightAnchor="40.0">
+                     <children>
+                        <TableView fx:id="personTable" editable="true" layoutX="22.0" layoutY="97.0" onMouseClicked="#loadFromPerson" prefHeight="451.0" prefWidth="302.0" style="-fx-background-radius: 0 0 10 10;" AnchorPane.leftAnchor="22.0">
+                           <columns>
+                              <TableColumn fx:id="first" prefWidth="100.0" text="FirstName" />
+                              <TableColumn fx:id="last" prefWidth="117.0" text="LastName" />
+                              <TableColumn fx:id="id" prefWidth="84.0" text="Account ID" />
+                           </columns>
+                        </TableView>
+                        <TableView fx:id="csvTable" layoutX="364.0" layoutY="97.0" prefHeight="451.0" prefWidth="326.0" style="-fx-background-radius: 0 0 10 10;" AnchorPane.rightAnchor="20.0">
+                           <columns>
+                              <TableColumn fx:id="order" prefWidth="130.0" text="Package number" />
+                              <TableColumn fx:id="date" prefWidth="195.0" text="Date" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="searchField" layoutX="22.0" layoutY="63.0" promptText="Search " />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>
