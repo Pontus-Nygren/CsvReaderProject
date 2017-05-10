@@ -232,7 +232,7 @@ public class StartScreen implements Initializable {
             fadeIn.setToValue(1);
             fadeIn.setCycleCount(1);
             
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), pane);
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), pane);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
             fadeOut.setCycleCount(1);
