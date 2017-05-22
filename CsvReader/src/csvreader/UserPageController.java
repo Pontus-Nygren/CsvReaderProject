@@ -166,9 +166,7 @@ public class UserPageController implements Initializable {
                 .request()
                 .put(Entity.entity(csvtemp, MediaType.APPLICATION_JSON));
         
-        for (int i = 0; i < personList.get(0).getCsvList().size(); i++) {
-            System.out.println(personList.get(0).getCsvList().get(i).getComment());
-        }
+        
         notification("Comment edited",1);
     }
 

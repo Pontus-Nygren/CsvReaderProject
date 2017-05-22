@@ -164,9 +164,9 @@ Client client = ClientBuilder.newClient();
 
                 } else {
 
-                    for (int i = 0; i < UserPageController.pList.size(); i++) {
-                        if (UserPageController.pList.get(i).getFirstName().toLowerCase().contains(searchField.getText().toLowerCase())) {
-                            searchList.add(UserPageController.pList.get(i));
+                    for (int i = 0; i < peopleList.size(); i++) {
+                        if (peopleList.get(i).getFirstName().toLowerCase().contains(searchField.getText().toLowerCase())) {
+                            searchList.add(peopleList.get(i));
                             first.setCellValueFactory(new PropertyValueFactory<>("firstName"));
                             last.setCellValueFactory(new PropertyValueFactory<>("lastName"));
                             id.setCellValueFactory(new PropertyValueFactory<>("id"));
