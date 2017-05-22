@@ -17,7 +17,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private String eMail;
-    private String role; 
+    private String roletype; 
     private String passWord;
     private ArrayList<CsvClass> csvList = new ArrayList();
 
@@ -25,12 +25,12 @@ public class Person {
     public Person() {
     }
 
-      public Person(int id, String firstName, String lastName, String eMail, String role, String passWord) {
+      public Person(int id, String firstName, String lastName, String eMail, String roletype, String passWord) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
-        this.role = role;
+        this.roletype = roletype;
         this.passWord = passWord;
     }
 
@@ -65,12 +65,12 @@ public class Person {
         this.eMail = eMail;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoletype() {
+        return roletype;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoletype(String roletype) {
+        this.roletype = roletype;
     }
 
     public String getPassWord() {

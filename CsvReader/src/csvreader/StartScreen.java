@@ -8,6 +8,7 @@ package csvreader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 
 
 /**
@@ -77,6 +83,12 @@ public class StartScreen implements Initializable {
     private AnchorPane loginerr;
    @FXML
    private ImageView CancelView;
+  
+   Client client = ClientBuilder.newClient(); 
+
+   
+   
+   
    @FXML
    private void exitFunc(){
    
@@ -93,10 +105,18 @@ public class StartScreen implements Initializable {
    }
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
-       
-        for(int i = 0; i<UserPageController.personList.size(); i++){
-            if(UserPageController.personList.get(i).geteMail().equals(userField.getText()) && UserPageController.personList.get(i).getPassWord().equals(pwField.getText()) && UserPageController.personList.get(i).getRole().toLowerCase().equals("admin")){
-                loginId = UserPageController.personList.get(i).getId();
+       List<Person> personList = client
+               .target("http://localhost:8080/CsvBackendReader/webapi/person/")
+               .request(MediaType.APPLICATION_JSON)
+               .get(new GenericType<List<Person>>() {});
+       for(int k = 0; k<personList.size(); k++){
+        System.out.println("personList" + personList.get(k).getPassWord()
+        + personList.get(k).geteMail()
+        + personList.get(k).getRoletype());
+       }
+        for(int i = 0; i<personList.size(); i++){
+            if(personList.get(i).geteMail().equals(userField.getText()) && personList.get(i).getPassWord().equals(pwField.getText()) && personList.get(i).getRoletype().toLowerCase().equals("admin")){
+                loginId = personList.get(i).getId();
                 System.out.println("admin ID" + loginId);
                 Parent pane = FXMLLoader.load(getClass().getResource("adminPage.fxml"));
                  
@@ -110,8 +130,8 @@ public class StartScreen implements Initializable {
                 
             
             
-            } else if(UserPageController.personList.get(i).geteMail().equals(userField.getText()) && UserPageController.personList.get(i).getPassWord().equals(pwField.getText()) && UserPageController.personList.get(i).getRole().toLowerCase().equals("courier")){
-                loginId = UserPageController.personList.get(i).getId();
+            } else if(personList.get(i).geteMail().equals(userField.getText()) && personList.get(i).getPassWord().equals(pwField.getText()) && personList.get(i).getRoletype().toLowerCase().equals("courier")){
+                loginId = personList.get(i).getId();
                 System.out.println("courier ID" + loginId);
                 Parent pane = FXMLLoader.load(getClass().getResource("userPage.fxml"));
 
@@ -182,7 +202,20 @@ public class StartScreen implements Initializable {
     
     }else if(event.getSource() == signedUpBtn){
     if (pw.getText().equals(pwConfirm.getText()) && !pw.getText().isEmpty() && !fname.getText().isEmpty() && !lname.getText().isEmpty() && !mail.getText().isEmpty()){
-    UserPageController.personList.add(new Person(CsvReader.id,fname.getText(), lname.getText(),mail.getText(), "Courier",pw.getText()));
+    //UserPageController.personList.add(new Person(CsvReader.id,fname.getText(), lname.getText(),mail.getText(), "Courier",pw.getText()));
+    Person addPer = new Person();
+    addPer.setFirstName(fname.getText());
+    addPer.setLastName(lname.getText());
+    addPer.seteMail(mail.getText());
+    addPer.setRoletype("Courier");
+    addPer.setPassWord(pw.getText());
+    
+    Person person = client
+            .target("http://localhost:8080/CsvBackendReader/webapi/person/")
+            .request(MediaType.APPLICATION_JSON)
+            .post(Entity.json(addPer), Person.class);
+    
+    
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("User Added!");
     alert.setHeaderText("Sign up completed!");

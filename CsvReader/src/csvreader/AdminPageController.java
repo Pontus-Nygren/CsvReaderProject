@@ -8,6 +8,7 @@ package csvreader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,6 +30,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 
 /**
  * FXML Controller class
@@ -73,17 +78,23 @@ public class AdminPageController implements Initializable {
     private SplitPane splitPane;
     private ObservableList<CsvClass> csvList;
     private ObservableList<Person> searchList;
-
+    private ObservableList<Person> peopleList;
+Client client = ClientBuilder.newClient();
     private void LoadList() {
 
-        for (int i = 0; i < UserPageController.pList.size(); i++) {
-            System.out.println("test:" + UserPageController.pList.get(i).geteMail());
+        List<Person> persons = client
+                .target("http://localhost:8080/CsvBackendReader/webapi/person/")
+                .request(MediaType.APPLICATION_JSON)
+                .get(new GenericType<List<Person>> () {});
+        peopleList = FXCollections.observableArrayList(persons);
+        for (int i = 0; i < peopleList.size(); i++) {
+            System.out.println("test:" + persons.get(i).geteMail());
             first.setCellValueFactory(new PropertyValueFactory<>("firstName"));
             last.setCellValueFactory(new PropertyValueFactory<>("lastName"));
             id.setCellValueFactory(new PropertyValueFactory<>("id"));
         }
         personTable.setItems(null);
-        personTable.setItems(UserPageController.pList);
+        personTable.setItems(peopleList);
     }
 
     @FXML
@@ -99,10 +110,14 @@ public class AdminPageController implements Initializable {
             System.out.println("wat");
         } else {
 
+             List<CsvClass> personCsvList = client
+               .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + personTable.getSelectionModel().getSelectedItem().getId())
+               .request(MediaType.APPLICATION_JSON)
+               .get(new GenericType<List<CsvClass>>() {});
             System.out.println("hej");
-            csvList = FXCollections.observableArrayList(personTable.getSelectionModel().getSelectedItem().getCsvList());
-            for (int i = 0; i < personTable.getSelectionModel().getSelectedItem().getCsvList().size(); i++) {
-                System.out.println(personTable.getSelectionModel().getSelectedItem().getCsvList().get(i).CLName);
+            csvList = FXCollections.observableArrayList(personCsvList);
+            for (int i = 0; i < personCsvList.size(); i++) {
+                
                 order.setCellValueFactory(new PropertyValueFactory<>("orderNr"));
                 date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
