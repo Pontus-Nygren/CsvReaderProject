@@ -19,7 +19,6 @@ import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
 
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -86,16 +85,16 @@ public class UserPageController implements Initializable {
     @FXML
     private ImageView deleteview;
 
-     Client client = ClientBuilder.newClient(); 
-    
-    
+    Client client = ClientBuilder.newClient();
+
+    // stänga appen
     @FXML
     private void exitFunc() {
 
         System.exit(0);
     }
-    
 
+//add file funktion + för att hantera filechooser + csv fil
     @FXML
     private void addFileBtn() throws FileNotFoundException {
         FileChooser fc = new FileChooser();
@@ -113,10 +112,9 @@ public class UserPageController implements Initializable {
 
             crunchifyBuffer = new BufferedReader(new FileReader(fileLocation));
 
-            
             while ((crunchifyLine = crunchifyBuffer.readLine()) != null) {
                 if (!crunchifyLine.isEmpty()) {
- 
+
                     crunchifyCSVtoArrayList(crunchifyLine);
                 }
 
@@ -125,18 +123,9 @@ public class UserPageController implements Initializable {
 
                 if (personList.get(i).getId() == StartScreen.loginId) {
                     System.out.println("Addfile " + StartScreen.loginId + "GetID " + personList.get(i).getId());
-                    csvList = FXCollections.observableArrayList(personList.get(i).getCsvList());
-                    for (int j = 0; j < personList.get(i).getCsvList().size(); j++) {
-                        System.out.println("CsvListobject " + personList.get(i).getCsvList().get(j));
-                        order.setCellValueFactory(new PropertyValueFactory<>("orderNr"));
-                        date.setCellValueFactory(new PropertyValueFactory<>("date"));
-                        comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
-                    }
-
                 }
-
             }
-            csvTable.setItems(csvList);
+            loadCsvList();
             notification("File successfully added", 1);
 
         } catch (IOException e) {
@@ -155,6 +144,7 @@ public class UserPageController implements Initializable {
 
     }
 
+    //Edit cell funktion
     @FXML
     public void handleEditAction(CellEditEvent<CsvClass, String> t) {
         ((CsvClass) t.getTableView().getItems().get(
@@ -165,11 +155,11 @@ public class UserPageController implements Initializable {
                 .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/")
                 .request()
                 .put(Entity.entity(csvtemp, MediaType.APPLICATION_JSON));
-        
-        
-        notification("Comment edited",1);
+
+        notification("Comment edited", 1);
     }
 
+    // funktion för att deleta
     @FXML
     private void deleteFunction() {
 
@@ -179,51 +169,35 @@ public class UserPageController implements Initializable {
 
         } else {
             String orderToDelete = csvTable.getSelectionModel().getSelectedItem().getOrderNr();
+            System.out.println("ordertodelete " + orderToDelete);
             Response r = client
                     .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + orderToDelete)
                     .request(MediaType.APPLICATION_JSON)
                     .delete();
-            
-//            for (int i = 0; i < personList.size(); i++) {
-//                if (personList.get(i).getId() == StartScreen.loginId) {
-//                    for (int k = 0; k < personList.get(i).getCsvList().size(); k++) {
-//                        if (personList.get(i).getCsvList().get(k).getOrderNr().equals(orderToDelete)) {
-//                            personList.get(i).getCsvList().remove(k);
-//                            csvList = FXCollections.observableArrayList(personList.get(i).getCsvList());
-//                            csvTable.setItems(null);
-//                            csvTable.setItems(csvList);
-//                        }
-//
-//                    }
-//
-//                }
-//            }
-List<CsvClass> personCsvList = client
-               .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + StartScreen.loginId)
-               .request(MediaType.APPLICATION_JSON)
-               .get(new GenericType<List<CsvClass>>() {});
-        
-        
-        
-        
-          
-                
-                csvList = FXCollections.observableArrayList(personCsvList);
-                System.out.println("CSVLISTSIZE" + csvList.size());
-                for (int j=0; j<csvList.size();j++){
-                    
+
+            List<CsvClass> personCsvList = client
+                    .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + StartScreen.loginId)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<CsvClass>>() {
+                    });
+
+            csvList = FXCollections.observableArrayList(personCsvList);
+            System.out.println("CSVLISTSIZE" + csvList.size());
+            for (int j = 0; j < csvList.size(); j++) {
+
                 order.setCellValueFactory(new PropertyValueFactory<>("orderNr"));
                 date.setCellValueFactory(new PropertyValueFactory<>("date"));
                 comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
-                }
-                csvTable.setItems(null);
-                csvTable.setItems(csvList);
+            }
+            csvTable.setItems(null);
+            csvTable.setItems(csvList);
             notification("File succesfully deleted!", 1);
         }
 
     }
     @FXML
     private Label msgLabel;
+// funktion för funktion animation beroende på vilken typ av notifiering
 
     private void notification(String message, int type) {
         if (type == 1) {
@@ -250,6 +224,7 @@ List<CsvClass> personCsvList = client
 
     }
 
+    //  logga ut funktion
     @FXML
     private void logoutButton() throws IOException {
         Parent login = FXMLLoader.load(getClass().getResource("StartScreenController.fxml"));
@@ -264,58 +239,50 @@ List<CsvClass> personCsvList = client
         System.out.println("IDlogout" + StartScreen.loginId);
     }
 
+    // funktion för att hantera CSV fil.
     public void crunchifyCSVtoArrayList(String crunchifyCSV) {
 
         if (crunchifyCSV != null) {
             String[] splitData = crunchifyCSV.split("\\s*,\\s*");
             for (int q = 0; q < splitData.length; q++) {
-                //  System.out.println("Col:"+q+"   " +splitData[q]);
+
             }
-           
-                
-                    //System.out.println(personList.get(i).getFirstName());
-                    CsvClass addCsv = new CsvClass(splitData[0], splitData[1], splitData[2], splitData[3], splitData[4], splitData[5]);
-                    CsvClass csvClient = client 
-                            .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + StartScreen.loginId)
-                            .request(MediaType.APPLICATION_JSON)
-                            .post(Entity.json(addCsv), CsvClass.class);
-                    
-                    
-                    //personList.get(i).getCsvList().add(new CsvClass(splitData[0], splitData[1], splitData[2], splitData[3], splitData[4], splitData[5]));
 
+            //System.out.println(personList.get(i).getFirstName());
+            CsvClass addCsv = new CsvClass(splitData[0], splitData[1], splitData[2], splitData[3], splitData[4], splitData[5]);
+            CsvClass csvClient = client
+                    .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + StartScreen.loginId)
+                    .request(MediaType.APPLICATION_JSON)
+                    .post(Entity.json(addCsv), CsvClass.class);
 
-                
-            
-
+            //personList.get(i).getCsvList().add(new CsvClass(splitData[0], splitData[1], splitData[2], splitData[3], splitData[4], splitData[5]));
         }
 
-        
+    }
+
+    // laddar listan till tableview från dB
+    public void loadCsvList() {
+        List<CsvClass> personCsvList = client
+                .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + StartScreen.loginId)
+                .request(MediaType.APPLICATION_JSON)
+                .get(new GenericType<List<CsvClass>>() {
+                });
+
+        csvList = FXCollections.observableArrayList(personCsvList);
+        System.out.println("CSVLISTSIZE" + csvList.size());
+        for (int j = 0; j < csvList.size(); j++) {
+
+            order.setCellValueFactory(new PropertyValueFactory<>("orderNr"));
+            date.setCellValueFactory(new PropertyValueFactory<>("date"));
+            comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+        }
+        csvTable.setItems(csvList);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<CsvClass> personCsvList = client
-               .target("http://localhost:8080/CsvBackendReader/webapi/person/csv/" + StartScreen.loginId)
-               .request(MediaType.APPLICATION_JSON)
-               .get(new GenericType<List<CsvClass>>() {});
-        
-        
-        
-        
-          
-                
-                csvList = FXCollections.observableArrayList(personCsvList);
-                System.out.println("CSVLISTSIZE" + csvList.size());
-                for (int j=0; j<csvList.size();j++){
-                    
-                order.setCellValueFactory(new PropertyValueFactory<>("orderNr"));
-                date.setCellValueFactory(new PropertyValueFactory<>("date"));
-                comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
-                
-            
-
-        }
-        csvTable.setItems(csvList);
+        loadCsvList();
 
         File f1 = new File("src/img/close.png");
         Image img2 = new Image(f1.toURI().toString());
